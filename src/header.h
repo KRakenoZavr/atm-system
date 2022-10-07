@@ -30,9 +30,15 @@ struct User
 };
 
 // authentication functions
+int getUserFromFile(FILE *ptr, struct User *u);
+void saveUserToFile(FILE *ptr, struct User u);
+
 void loginMenu(char a[50], char pass[50]);
 void registerMenu(char a[50], char pass[50]);
 const char *getPassword(struct User u);
+
+int checkUserExists(char a[50]);
+void saveNewUser(struct User u);
 
 // system function
 void createNewAcc(struct User u);
