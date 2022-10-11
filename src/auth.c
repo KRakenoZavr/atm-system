@@ -149,3 +149,24 @@ void saveNewUser(struct User u)
     saveUserToFile(pf, u);
     fclose(pf);
 }
+
+void getUserByName(struct User *u)
+{
+    FILE *pf = fopen(USERS, "a+");
+    char username[50];
+
+    strcpy(username, u->name);
+
+    while (getUserFromFile(pf, u))
+    {
+        if (strcmp(username, u->name) == 0)
+        {
+            fclose(pf);
+            return;
+        }
+    }
+
+    fclose(pf);
+    printf("\nUnexpected error");
+    exit(1);
+}

@@ -32,11 +32,12 @@ struct User
 // authentication functions
 int getUserFromFile(FILE *ptr, struct User *u);
 void saveUserToFile(FILE *ptr, struct User u);
+void getUserByName(struct User *u);
 
+// menu
 void loginMenu(char a[50], char pass[50]);
 void registerMenu(char a[50], char pass[50]);
 const char *getPassword(struct User u);
-
 int checkUserExists(char a[50]);
 void saveNewUser(struct User u);
 
@@ -44,3 +45,7 @@ void saveNewUser(struct User u);
 void createNewAcc(struct User u);
 void mainMenu(struct User u);
 void checkAllAccounts(struct User u);
+void updateAcc(struct User u);
+
+// util funcs
+void replaceLine(struct User u, struct Record r, int line, const char* path);
