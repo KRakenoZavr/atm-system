@@ -82,13 +82,14 @@ void initMenu(struct User *u)
             case 2:
                 registerMenu(u->name, u->password);
                 saveNewUser(*u);
-                r = 2;
+                r = 1;
                 break;
             case 3:
                 exit(1);
                 break;
             default:
                 printf("Insert a valid operation!\n");
+                exit(1);
         }
     }
 };
