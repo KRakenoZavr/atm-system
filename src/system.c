@@ -92,6 +92,27 @@ void success(struct User u)
     }
 }
 
+void fail(struct User u)
+{
+    int option;
+    printf("\nFail!\n\n");
+        invalid:
+    printf("Enter 1 to go to the main menu and 0 to exit!\n");
+    scanf("%d", &option);
+    system("clear");
+    if (option == 1)
+    {
+        mainMenu(u);
+    } else if (option == 0)
+    {
+        exit(1);
+    } else
+    {
+        printf("Insert a valid operation!\n");
+        goto invalid;
+    }
+}
+
 void createNewAcc(struct User u)
 {
     struct Record r;
@@ -158,4 +179,82 @@ void checkAllAccounts(struct User u)
     }
     fclose(pf);
     success(u);
+}
+
+void updateCountry(struct User u, struct Record r, int count)
+{
+    printf("\nType new country: ");
+    scanf("%s", r.country);
+
+    replaceLine(u, r, count, RECORDS);
+}
+
+void updateMenu(struct User u, struct Record r, int count)
+{
+    int option;
+
+    system("clear");
+    printf("\nType the field you want to change: ");
+    printf("\n1 - country");
+    printf("\n2 - phone number\n\n\n");
+
+        invalid:
+    scanf("%d", &option);
+    switch (option)
+    {
+        case 1:
+            updateCountry(u, r, count);
+            break;
+        case 2:
+            updateAcc(u);
+            break;
+        default:
+            printf("Invalid operation!\n");
+            goto invalid;
+    }
+}
+
+void updateAcc(struct User u)
+{
+    int accountID;
+    int count = 0;
+    char userName[50];
+    struct Record r;
+    FILE *pf = fopen(RECORDS, "r");
+
+    system("clear");
+    printf("\t\t\t===== Update account =====\n");
+
+    printf("\nType the id of account number: ");
+    scanf("%d", &accountID);
+
+    while (getAccountFromFile(pf, userName, &r))
+    {
+        if (r.accountNbr == accountID && strcmp(u.name, userName) == 0)
+        {
+            fclose(pf);
+            updateMenu(u, r, (count * 2) + 1);
+
+            success(u);
+        }
+        count++;
+    }
+
+    fclose(pf);
+    printf("No account was found, try again\n");
+    fail(u);
+}
+
+void updateAccFile(struct User u)
+{
+    char country[100];
+    int phone;
+
+    system("clear");
+    printf("\t\t\t===== New record =====\n");
+
+    printf("\nEnter new country");
+    scanf("%s", country);
+    printf("\nEnter the new phone number:");
+    scanf("%d", &phone);
 }
